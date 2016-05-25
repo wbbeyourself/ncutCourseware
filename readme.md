@@ -26,7 +26,7 @@ username改为你的学号， password改为你的登录密码
 - 简介：本人王冰，计算机13级1班，以编程为乐
 - 初衷：因无法忍受NCUT课件下载的繁琐，遂一咬牙，一跺脚，闭关1周，从零开始学Python，NCUTSpider由此诞生。若使用过程中出现问题请联系本人，以便及时及时为您解决问题。
 - 联系方式： QQ 1101704103
-- Github地址：[https://github.com/wbbeyourself/ncutSpider/tree/master/ncutCourseware][1]
+- Github地址：[https://github.com/wbbeyourself/ncutCourseware][1]
 
 
 ## 打赏方式
@@ -34,4 +34,4 @@ username改为你的学号， password改为你的登录密码
 
 All Rights Reserved, Copyright (C) 2016, beyourself
 
-[1]:https://github.com/wbbeyourself/ncutSpider/tree/master/ncutCourseware
+[1]:https://github.com/wbbeyourself/ncutCourseware
