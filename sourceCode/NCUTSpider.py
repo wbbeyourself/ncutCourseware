@@ -1,5 +1,5 @@
 # -*-coding:utf8-*-
-#All Rights Reserved, Copyright (C) 2015, beyourself
+# All Rights Reserved, Copyright (C) 2016, beyourself
 
 from MessagePrinter import *
 from configReader import *
@@ -27,7 +27,9 @@ class MySpider:
             self.downloadall = False
         self.loginUrl = 'http://e.ncut.edu.cn/eclass/index.php?mon_icampus=yes'
         self.cookie = cookielib.MozillaCookieJar('cookie.txt')
-        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie))
+        self.opener = urllib2.build_opener(
+            urllib2.HTTPCookieProcessor(self.cookie)
+        )
         self.postdata = urllib.urlencode({'login': self.username, 'password': self.pw, 'submitAuth': '%BD%F8%C8%EB'})
 
     def get_suffix(self, furl):
@@ -51,15 +53,14 @@ class MySpider:
         else:
             return True
 
-
     def print_dict(self, mydict):
-        for (k,v) in mydict.items():
+        for (k, v) in mydict.items():
             print 'Key:' + k + ", Value:" + v
 
     def print_list(self, mylist):
         i = 0
         for item in mylist:
-            print '[' + str(i) +'] ', item
+            print '[' + str(i) + '] ', item
             i += 1
 
     def Login(self, url, data):
@@ -80,19 +81,18 @@ class MySpider:
                     cname1 = cname + '1'
                     cname2 = cname + '2'
 
-                    if course_dict.has_key(cname):
-                        if not course_dict.has_key(cname1):
+                    if cname in course_dict:
+                        if cname1 not in course_dict:
                             cname = cname1
                         else:
                             cname = cname2
-                    
+
                     course_dict[cname] = curl
                 except:
                     continue
         else:
             MessagePrinter.print_errormessage(u'找不到课程!!!')
         return course_dict
-
 
     def get_dirUrlDict(self, html):
         dirUrlDict = {}
@@ -106,13 +106,12 @@ class MySpider:
                     if dirUrl:
                         subdirname = re.findall('hspace=5>(.*?)</a>', item)
                         if subdirname:
-                            dirUrlDict[subdirname[0]] = 'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir='+ dirUrl[0]
+                            dirUrlDict[subdirname[0]] = 'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir=' + dirUrl[0]
                     # else:
                     #     MessagePrinter.print_errormessage(u'文件夹地址获取失败!!!')
                 except:
                     continue
         return dirUrlDict
-
 
     def get_fdict(self, html):
         fdic = {}
@@ -140,7 +139,7 @@ class MySpider:
         return cnum
 
     def get_user_selected(self, maxlen):
-        #假设课程数目是个位数
+        # 假设课程数目是个位数
         while(True):
             MessagePrinter.print_promptmessage(u'请输入课程编号：')
             try:
@@ -193,7 +192,7 @@ class MySpider:
                 # fname = selector.xpath('//td[@align="left"]/a/text()')[0]
                 # fsize_dic[fname] = fsize
         # else:
-        #     MessagePrinter.print_errormessage(u'该课程所有文件大小获取失败!!!')
+        # MessagePrinter.print_errormessage(u'该课程所有文件大小获取失败!!!')
         return fsize_dic
 
     def download_single_course(self, cname, curl):
@@ -282,7 +281,7 @@ class MySpider:
                     self.downloadfiles(dochtml, fulldirname, cnum, 1)
                 except:
                     continue
-                #create sub directory and download
+                # create sub directory and download
 
     def visit(self, url):
         result = self.opener.open(url)
@@ -326,13 +325,13 @@ if __name__ == '__main__':
     username = ''
     pw = ''
     try:
-        #获取脚本路径
+        # 获取脚本路径
         path = sys.path[0]
-        #判断为脚本文件还是py2exe编译后的文件，如果是脚本文件，则返回的是脚本的目录，
-        #如果是py2exe编译后的文件，则返回的是编译后的文件路径
+        # 判断为脚本文件还是py2exe编译后的文件，如果是脚本文件，则返回的是脚本的目录，
+        # 如果是py2exe编译后的文件，则返回的是编译后的文件路径
         if os.path.isfile(path):
             path = os.path.dirname(path)
-        myCfgReader = configReader(os.path.join(path,'_config.ini'))
+        myCfgReader = configReader(os.path.join(path, '_config.ini'))
         username = myCfgReader.readConfig('loginInfo', 'username')
         pw = myCfgReader.readConfig('loginInfo', 'password')
     except:
