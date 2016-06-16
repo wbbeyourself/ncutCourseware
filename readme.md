@@ -30,7 +30,7 @@ username改为你的学号， password改为你的登录密码
 - Github地址：[https://github.com/wbbeyourself/ncutCourseware][1]
 
 
-## 打赏方式
+## 赞助方式
 ![money](https://raw.githubusercontent.com/wbbeyourself/Pictures/master/money.png)
 
 All Rights Reserved, Copyright (C) 2016, beyourself
