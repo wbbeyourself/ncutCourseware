@@ -34,7 +34,7 @@ class MySpider:
 
     def get_suffix(self, furl):
         suffix = furl.split('.')[1]
-        return suffix
+        return '.'+suffix
 
     def sizeok(self, size):
         i = int(len(size))
@@ -139,11 +139,11 @@ class MySpider:
         return cnum
 
     def get_user_selected(self, maxlen):
-        # 假设课程数目是个位数
         while(True):
             MessagePrinter.print_promptmessage(u'请输入课程编号：')
             try:
-                num = int(raw_input()[0])
+                # 获取用户输入
+                num = int(raw_input())
             except:
                 MessagePrinter.print_errormessage(u'输入有误，请重新输入!!!')
                 continue
@@ -212,19 +212,24 @@ class MySpider:
         dochtml = self.visit('http://e.ncut.edu.cn/eclass/eclass/document/document.php')
         self.downloadfiles(dochtml, cname, cnum)
 
-    def downloadfile(self, fname, furl, pathprefix, cnum):
+    def downloadfile(self, fname, furl, pathprefix, cnum, fsize):
         if '%252F' in furl:
             furl = re.sub('%252F', '/', furl)
 
         full_url = 'http://e.ncut.edu.cn/eclass/'+cnum+'/document/' + furl
         full_fname = pathprefix + fname
         if not os.path.isfile(full_fname):
-            MessagePrinter.print_process_info(u'正在下载文件...')
-            MessagePrinter.print_process_info(fname)
-            fp = open(full_fname, 'wb')
-            doc = requests.get(full_url)
-            fp.write(doc.content)
-            fp.close()
+            smallsize = self.sizeok(fsize)
+            stilldownload = False
+            if not smallsize:
+                stilldownload = self.question(fsize)
+            if smallsize or ((not smallsize) and stilldownload):
+                MessagePrinter.print_process_info(u'正在下载文件...')
+                MessagePrinter.print_process_info(fname)
+                fp = open(full_fname, 'wb')
+                doc = requests.get(full_url)
+                fp.write(doc.content)
+                fp.close()
         else:
             MessagePrinter.print_warningmessage(fname)
             MessagePrinter.print_warningmessage(u'该文件已存在!!!')
@@ -244,22 +249,13 @@ class MySpider:
             for fname in fnamelist:
                 furl = fdict[fname]
                 each_size = fsizedict[fname]
-                smallsize = self.sizeok(each_size)
-                stilldownload = False
-                if not smallsize:
-                    stilldownload = self.question(each_size)
-                if smallsize or ((not smallsize) and stilldownload):
-                    try:
-                        suffix = self.get_suffix(furl)
-                    except:
-                        continue
-                    flag = re.findall(suffix, fname)
-                    if not flag:
-                        fname = fname + '.' + suffix
-                    self.downloadfile(fname, furl, pathprefix, cnum)
-                else:
+                try:
+                    suffix = self.get_suffix(furl)
+                except:
                     continue
-
+                if suffix not in fname:
+                    fname += suffix
+                self.downloadfile(fname, furl, pathprefix, cnum, each_size)
         # else:
             # MessagePrinter.print_errormessage(u'该课程所有文件大小获取失败!!!')
 
