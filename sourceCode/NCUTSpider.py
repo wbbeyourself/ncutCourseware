@@ -1,4 +1,4 @@
-# -*-coding:utf8-*-
+# coding=utf-8
 # All Rights Reserved, Copyright (C) 2016, beyourself
 
 from MessagePrinter import *

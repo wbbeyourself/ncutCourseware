@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#encoding: utf-8
+# coding=utf-8
 import ctypes
 
 STD_INPUT_HANDLE = -10
