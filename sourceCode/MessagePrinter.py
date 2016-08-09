@@ -1,5 +1,6 @@
 from Color import *
 
+
 class MessagePrinter:
 
     colorer = Color()
@@ -20,7 +21,6 @@ class MessagePrinter:
         print ''
         print ''
 
-
     @staticmethod
     def print_promptmessage(message):
         print ''
@@ -28,7 +28,6 @@ class MessagePrinter:
         MessagePrinter.colorer.print_green_text(message)
         print ''
         print ''
-
 
     @staticmethod
     def print_process_info(message):

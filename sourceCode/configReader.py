@@ -1,8 +1,11 @@
 # coding=utf-8
 import ConfigParser
-import os,sys
+import os
+import sys
+
 
 class configReader(object):
+
     def __init__(self, configPath):
         configFile = configPath
         self.cReader = ConfigParser.ConfigParser()

@@ -30,15 +30,16 @@ class MySpider:
         self.opener = urllib2.build_opener(
             urllib2.HTTPCookieProcessor(self.cookie)
         )
-        self.postdata = urllib.urlencode({'login': self.username, 'password': self.pw, 'submitAuth': '%BD%F8%C8%EB'})
+        self.postdata = urllib.urlencode(
+            {'login': self.username, 'password': self.pw, 'submitAuth': '%BD%F8%C8%EB'})
 
     def get_suffix(self, furl):
         suffix = furl.split('.')[1]
-        return '.'+suffix
+        return '.' + suffix
 
     def sizeok(self, size):
         i = int(len(size))
-        c = size[i-1]
+        c = size[i - 1]
         if c == 'M':
             t = size.split('.')[0]
             try:
@@ -106,7 +107,8 @@ class MySpider:
                     if dirUrl:
                         subdirname = re.findall('hspace=5>(.*?)</a>', item)
                         if subdirname:
-                            dirUrlDict[subdirname[0]] = 'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir=' + dirUrl[0]
+                            dirUrlDict[subdirname[
+                                0]] = 'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir=' + dirUrl[0]
                     # else:
                     #     MessagePrinter.print_errormessage(u'文件夹地址获取失败!!!')
                 except:
@@ -157,7 +159,8 @@ class MySpider:
     def question(self, fsize):
         while(True):
             print fsize
-            MessagePrinter.print_promptmessage(u'文件大小超过50M，是否继续下载?(1 下载， 0 不下载): ')
+            MessagePrinter.print_promptmessage(
+                u'文件大小超过50M，是否继续下载?(1 下载， 0 不下载): ')
             try:
                 yes = int(raw_input()[0])
                 if not (yes == 0 or yes == 1):
@@ -197,7 +200,7 @@ class MySpider:
 
     def download_single_course(self, cname, curl):
         if not os.path.exists(cname):
-            cdir = './'+cname+'/'
+            cdir = './' + cname + '/'
             try:
                 os.mkdir(cdir)
             except:
@@ -209,14 +212,15 @@ class MySpider:
         MessagePrinter.print_process_info(u'正在下载课程...')
         MessagePrinter.print_process_info(cname)
         self.visit(curl)
-        dochtml = self.visit('http://e.ncut.edu.cn/eclass/eclass/document/document.php')
+        dochtml = self.visit(
+            'http://e.ncut.edu.cn/eclass/eclass/document/document.php')
         self.downloadfiles(dochtml, cname, cnum)
 
     def downloadfile(self, fname, furl, pathprefix, cnum, fsize):
         if '%252F' in furl:
             furl = re.sub('%252F', '/', furl)
 
-        full_url = 'http://e.ncut.edu.cn/eclass/'+cnum+'/document/' + furl
+        full_url = 'http://e.ncut.edu.cn/eclass/' + cnum + '/document/' + furl
         full_fname = pathprefix + fname
         if not os.path.isfile(full_fname):
             smallsize = self.sizeok(fsize)
@@ -297,12 +301,14 @@ class MySpider:
                 cnamelist = cdict.keys()
                 if self.downloadall:
                     for cname in cnamelist:
-                        self.download_single_course('./'+cname+'/', cdict[cname])
+                        self.download_single_course(
+                            './' + cname + '/', cdict[cname])
                 else:
                     MessagePrinter.print_promptmessage(u'待选课程如下：')
                     self.print_list(cnamelist)
                     course_num = self.get_user_selected(len(cdict))
-                    self.download_single_course('./'+cnamelist[course_num]+'/', cdict[cnamelist[course_num]])
+                    self.download_single_course(
+                        './' + cnamelist[course_num] + '/', cdict[cnamelist[course_num]])
                 return True
 
             else:
