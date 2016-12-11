@@ -17,6 +17,7 @@
 - import urllib
 - import cookielib
 - import sys
+- import codecs
 
 **注：Python27.zip内已包含这些依赖库了！**
 

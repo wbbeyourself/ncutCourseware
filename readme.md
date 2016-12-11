@@ -12,7 +12,6 @@
 
 ## 使用说明
 
-**解压exe文件，里面有两个目录，dist和build, 配置文件_config.ini和NCUTSpider.exe都在dist目录下**
 
 1. 配置文件_config.ini
 
@@ -20,7 +19,7 @@ username改为你的学号， password改为你的登录密码
 
 2. NCUTSpider.exe
 
-双击dist文件夹下的NCUTSpider.exe即可，就是这么简单! 课件就会自动下载到dist这个文件夹里
+双击NCUTSpider.exe即可，就是这么简单! 课件就会自动下载到当前文件夹
 
 ## 关于作者
 

@@ -1,17 +1,21 @@
 # coding=utf-8
 # All Rights Reserved, Copyright (C) 2016, beyourself
 
+import codecs
+import cookielib
+import os
+import re
+import sys
+import time
+import urllib
+import urllib2
+
+import requests
+from lxml import etree
+
 from MessagePrinter import *
 from configReader import *
-import requests
-import time
-import os
-from lxml import etree
-import re
-import urllib2
-import urllib
-import cookielib
-import sys
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -316,6 +320,11 @@ class MySpider:
                 return False
 
 
+def babyGoodBye():
+    os.system('pause')
+    os._exit(-1)
+
+
 if __name__ == '__main__':
     print '*******************   '
     print u'欢迎使用NCUT课件爬虫!'
@@ -326,6 +335,7 @@ if __name__ == '__main__':
 
     username = ''
     pw = ''
+    CONFIGFILE = '_config.ini'
     try:
         # 获取脚本路径
         path = sys.path[0]
@@ -333,17 +343,27 @@ if __name__ == '__main__':
         # 如果是py2exe编译后的文件，则返回的是编译后的文件路径
         if os.path.isfile(path):
             path = os.path.dirname(path)
-        myCfgReader = configReader(os.path.join(path, '_config.ini'))
+        # 若配置文件有记事本BOM头，则去掉BOM头
+        conf = path + '/' + CONFIGFILE
+        if not os.path.exists(conf):
+            MessagePrinter.print_errormessage('no file ' + conf)
+            babyGoodBye()
+        with open(conf) as f:
+            data = f.read()
+        if data[:3] == codecs.BOM_UTF8:
+            data = data[3:]
+            with open(conf, 'w') as f:
+                f.write(data + '\n')
+
+        myCfgReader = configReader(os.path.join(path, CONFIGFILE))
         username = myCfgReader.readConfig('loginInfo', 'username')
         pw = myCfgReader.readConfig('loginInfo', 'password')
     except:
         MessagePrinter.print_errormessage(u'请检查配置文件!!!')
-        time.sleep(15)
-        sys.exit()
+        babyGoodBye()
     if (not username.strip()) or (not pw.strip()):
         MessagePrinter.print_errormessage(u'用户名或密码不能为空!!!')
-        time.sleep(15)
-        sys.exit()
+        babyGoodBye()
 
     MessagePrinter.print_promptmessage(u'下载全部输入y,下载单个课程输入n :')
     choice = raw_input()
@@ -352,4 +372,4 @@ if __name__ == '__main__':
         MessagePrinter.print_process_info(u'下载完成')
     else:
         MessagePrinter.print_errormessage(u'下载失败')
-    time.sleep(15)
+    babyGoodBye()
