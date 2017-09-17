@@ -83,14 +83,14 @@ class MySpider:
                 try:
                     cname = re.findall('">(.*?)<', item)[0]
                     curl = re.findall('href="(.*?)">', item)[0]
-                    cname1 = cname + '1'
-                    cname2 = cname + '2'
 
                     if cname in course_dict:
-                        if cname1 not in course_dict:
-                            cname = cname1
-                        else:
-                            cname = cname2
+                        # 重名的课程数量不会超过10个
+                        for i in xrange(1, 10):
+                            cname_t = '%s%s' % (cname, i)
+                            if cname_t not in course_dict:
+                                cname = cname_t
+                                break
 
                     course_dict[cname] = curl
                 except:
