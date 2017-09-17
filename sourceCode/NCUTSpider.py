@@ -21,7 +21,6 @@ sys.setdefaultencoding("utf-8")
 
 
 class MySpider:
-
     def __init__(self, username, pw, choice):
         self.username = username
         self.pw = pw
@@ -40,23 +39,6 @@ class MySpider:
     def get_suffix(self, furl):
         suffix = furl.split('.')[1]
         return '.' + suffix
-
-    def sizeok(self, size):
-        i = int(len(size))
-        c = size[i - 1]
-        if c == 'M':
-            t = size.split('.')[0]
-            try:
-                n = int(t)
-            except:
-                # MessagePrinter.print_errormessage(u'整数转换出错!!!!')
-                return True
-            if n < 50:
-                return True
-            else:
-                return False
-        else:
-            return True
 
     def print_dict(self, mydict):
         for (k, v) in mydict.items():
@@ -111,10 +93,8 @@ class MySpider:
                     if dirUrl:
                         subdirname = re.findall('hspace=5>(.*?)</a>', item)
                         if subdirname:
-                            dirUrlDict[subdirname[
-                                0]] = 'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir=' + dirUrl[0]
-                    # else:
-                    #     MessagePrinter.print_errormessage(u'文件夹地址获取失败!!!')
+                            dirUrlDict[subdirname[0]] = \
+                                'http://e.ncut.edu.cn/eclass/eclass/document/document.php?openDir=' + dirUrl[0]
                 except:
                     continue
         return dirUrlDict
@@ -132,12 +112,8 @@ class MySpider:
                         fname = re.findall('hspace=5>(.*?)</a>', item)
                         if fname:
                             fdic[fname[0]] = furl[0]
-                    # else:
-                    #     MessagePrinter.print_errormessage(u'该文件匹配失败!!!')
                 except:
                     continue
-        # else:
-            # MessagePrinter.print_errormessage(u'无法获取课件!!!')
         return fdic
 
     def get_cnum(self, curl):
@@ -145,7 +121,7 @@ class MySpider:
         return cnum
 
     def get_user_selected(self, maxlen):
-        while(True):
+        while (True):
             MessagePrinter.print_promptmessage(u'请输入课程编号：')
             try:
                 # 获取用户输入
@@ -161,7 +137,7 @@ class MySpider:
                 continue
 
     def question(self, fsize):
-        while(True):
+        while (True):
             print fsize
             MessagePrinter.print_promptmessage(
                 u'文件大小超过50M，是否继续下载?(1 下载， 0 不下载): ')
@@ -196,10 +172,7 @@ class MySpider:
                 else:
                     MessagePrinter.print_errormessage(u'该文件大小获取失败!!!')
                     continue
-                # fname = selector.xpath('//td[@align="left"]/a/text()')[0]
-                # fsize_dic[fname] = fsize
-        # else:
-        # MessagePrinter.print_errormessage(u'该课程所有文件大小获取失败!!!')
+
         return fsize_dic
 
     def download_single_course(self, cname, curl):
@@ -227,17 +200,12 @@ class MySpider:
         full_url = 'http://e.ncut.edu.cn/eclass/' + cnum + '/document/' + furl
         full_fname = pathprefix + fname
         if not os.path.isfile(full_fname):
-            smallsize = self.sizeok(fsize)
-            stilldownload = False
-            if not smallsize:
-                stilldownload = self.question(fsize)
-            if smallsize or ((not smallsize) and stilldownload):
-                MessagePrinter.print_process_info(u'正在下载文件...')
-                MessagePrinter.print_process_info(fname)
-                fp = open(full_fname, 'wb')
-                doc = requests.get(full_url)
-                fp.write(doc.content)
-                fp.close()
+            MessagePrinter.print_process_info(u'正在下载文件...')
+            MessagePrinter.print_process_info(fname)
+            fp = open(full_fname, 'wb')
+            doc = requests.get(full_url)
+            fp.write(doc.content)
+            fp.close()
         else:
             MessagePrinter.print_warningmessage(fname)
             MessagePrinter.print_warningmessage(u'该文件已存在!!!')
@@ -264,8 +232,6 @@ class MySpider:
                 if suffix not in fname:
                     fname += suffix
                 self.downloadfile(fname, furl, pathprefix, cnum, each_size)
-        # else:
-            # MessagePrinter.print_errormessage(u'该课程所有文件大小获取失败!!!')
 
         if (not subPage) and dirurldict:
 
@@ -285,7 +251,6 @@ class MySpider:
                     self.downloadfiles(dochtml, fulldirname, cnum, 1)
                 except:
                     continue
-                # create sub directory and download
 
     def visit(self, url):
         result = self.opener.open(url)
