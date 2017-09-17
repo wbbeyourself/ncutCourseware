@@ -44,6 +44,7 @@ python mysetup.py py2exe
 - 推荐博客 廖雪峰: [http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000][8]
 - py2exe用法: [http://blog.chinaunix.net/uid-25979788-id-3064613.html][9]
 - py2exe打包路径问题解决方案: [http://www.blogjava.net/cpegtop/articles/384455.html][10]
+- py2exe for python2.7: [https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/][11]
 
 
 
@@ -70,3 +71,4 @@ python mysetup.py py2exe
 [8]:http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000
 [9]:http://blog.chinaunix.net/uid-25979788-id-3064613.html
 [10]:http://www.blogjava.net/cpegtop/articles/384455.html
+[11]:https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/
