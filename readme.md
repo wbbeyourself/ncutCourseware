@@ -29,7 +29,7 @@ username改为你的学号， password改为你的登录密码
 
 
 ## 赞助方式
-![money](http://ww1.sinaimg.cn/large/0060lm7Tly1fn3ig5qppoj30g30ggwgm.jpg)
+![money](http://ww2.sinaimg.cn/large/0060lm7Tly1fn3ijhrjrmj303803b3yk.jpg)
 
 All Rights Reserved, Copyright (C) 2016, beyourself
 
